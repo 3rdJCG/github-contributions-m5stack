@@ -21,7 +21,7 @@ void setup()
 	M5.begin(true, false, true);
 	M5.Lcd.clear(BLACK);
 	M5.Lcd.setTextColor(WHITE);
-	M5.Lcd.setTextSize(2);
+	M5.Lcd.setTextSize(1);
 	M5.Lcd.setCursor(0, 0);
 	M5.Lcd.setTextDatum(0);
 	M5.Lcd.println("github-contributions-m5stack");
