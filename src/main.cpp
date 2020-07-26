@@ -28,14 +28,12 @@ const uint8_t grassColors[5][3] = {{235, 237, 240},
 								   {48, 180, 78},
 								   {33, 170, 57}};
 
+void displayMode(uint8_t mode);
+
 void setup()
 {
 	M5.begin(true, false, true);
-	M5.Lcd.clear(BLACK);
-	M5.Lcd.setTextColor(WHITE);
-	M5.Lcd.setTextSize(1);
-	M5.Lcd.setCursor(0, 0);
-	M5.Lcd.setTextDatum(0);
+	displayMode(0);
 	M5.Lcd.println("github-contributions-m5stack");
 	M5.Lcd.print("connecting");
 
@@ -62,7 +60,7 @@ void loop()
 		tm = localtime(&t);
 
 		HTTPClient http;
-		http.begin(apiServer+ github_username +"/count");
+		http.begin(apiServer + github_username + "/count");
 
 		int httpCode = http.GET();
 
@@ -125,11 +123,40 @@ void loop()
 		}
 		else
 		{
+			displayMode(0);
+			M5.Lcd.setTextColor(YELLOW);
 			M5.Lcd.println("Bad HTTP responce");
 			return;
 		}
 
 		http.end();
 		delay(10000);
+	}
+	else
+	{
+		displayMode(0);
+		M5.Lcd.setTextColor(YELLOW);
+		M5.Lcd.println("Connection error");
+		M5.Lcd.setTextColor(WHITE);
+		M5.Lcd.println("Please check WiFi connection");
+		
+		delay(10000);
+	}
+}
+
+void displayMode(uint8_t mode)
+{
+	switch (mode)
+	{
+	case 0: // Bash like mode
+		M5.Lcd.clear(BLACK);
+		M5.Lcd.setTextColor(WHITE);
+		M5.Lcd.setTextSize(1);
+		M5.Lcd.setCursor(0, 0);
+		M5.Lcd.setTextDatum(0);
+		break;
+
+	default:
+		break;
 	}
 }
