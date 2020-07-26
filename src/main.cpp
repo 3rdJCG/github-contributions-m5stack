@@ -118,9 +118,10 @@ void loop()
 			M5.Lcd.clear(M5.Lcd.color565(grassColors[grassColorDepth][0], grassColors[grassColorDepth][1], grassColors[grassColorDepth][2]));
 			M5.Lcd.setTextSize(2);
 			M5.Lcd.drawCentreString("Today's Contributions", 160, 10, 2);
+			M5.Lcd.drawCentreString(github_username, 160, 200, 2);
 			M5.Lcd.setTextSize(10);
 			M5.Lcd.setTextDatum(4);
-			M5.Lcd.drawCentreString(contributions_count, 160, 80, 2);
+			M5.Lcd.drawCentreString(contributions_count, 160, 65, 2);
 		}
 		else
 		{
