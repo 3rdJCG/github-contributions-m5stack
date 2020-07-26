@@ -6,7 +6,7 @@
 #include <ArduinoJson.h>
 
 // If you don't use secrets.h comment out this
-#define externalSecrets
+// #define externalSecrets
 
 #ifdef externalSecrets
 #include <secrets.h>
