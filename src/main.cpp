@@ -6,7 +6,7 @@
 #include <ArduinoJson.h>
 
 // If you don't use secrets.h comment out this
-#define externalSecrets
+// #define externalSecrets
 
 #ifdef externalSecrets
 #include <secrets.h>
@@ -28,6 +28,7 @@ const uint8_t grassColors[5][3] = {{235, 237, 240},
 
 void displayMode(uint8_t mode);
 int32_t getContributions(String username);
+uint8_t getGrassColors(int32_t contributions);
 
 void setup()
 {
@@ -40,7 +41,7 @@ void setup()
 	while (WiFi.status() != WL_CONNECTED)
 	{
 		delay(500);
-		M5.Lcd.print(".");							
+		M5.Lcd.print(".");
 	}
 	M5.Lcd.println("Done!");
 
@@ -63,32 +64,7 @@ void loop()
 		return;
 	}
 
-	// Back colors setting
-	uint8_t grassColorDepth = 0;
-	if (contributions <= 0)
-	{
-		grassColorDepth = 0;
-	}
-	else if (contributions < 3)
-	{
-		grassColorDepth = 1;
-	}
-	else if (contributions < 5)
-	{
-		grassColorDepth = 2;
-	}
-	else if (contributions < 10)
-	{
-		grassColorDepth = 3;
-	}
-	else if (contributions >= 10)
-	{
-		grassColorDepth = 4;
-	}
-	else
-	{
-		grassColorDepth = 0;
-	}
+	uint8_t grassColorDepth = getGrassColors(contributions);
 
 	// Text color setting
 	if (grassColorDepth <= 2)
@@ -169,4 +145,36 @@ int32_t getContributions(String username)
 
 		return -1;
 	}
+}
+
+uint8_t getGrassColors(int32_t contributions)
+{
+	uint8_t grassColorDepth = 0;
+
+	if (contributions <= 0)
+	{
+		grassColorDepth = 0;
+	}
+	else if (contributions < 3)
+	{
+		grassColorDepth = 1;
+	}
+	else if (contributions < 5)
+	{
+		grassColorDepth = 2;
+	}
+	else if (contributions < 10)
+	{
+		grassColorDepth = 3;
+	}
+	else if (contributions >= 10)
+	{
+		grassColorDepth = 4;
+	}
+	else
+	{
+		grassColorDepth = 0;
+	}
+
+	return grassColorDepth;
 }
